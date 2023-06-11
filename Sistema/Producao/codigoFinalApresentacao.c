@@ -51,17 +51,15 @@ void formataFraseSimples(int corFundo, int corTexto, char frase[30]);
 void formataCor(int corFundo, int corTexto);
 void quebraLinha(int quantidadeQuebras);
 void cadastrarMotorista(
-	int matricula, char nome[80], char cpf[15], char fone[15], char email[50], char senha[50], char cep[50],
-	char logradouro[60], char numero[6], char bairro[15],char municipio[20], char uf[2], int idMotorista,
-	char cnhMotorista[15], char orgaoEmissorCNH[15], char validade[11], char tipoCNH[3], int nivelPermissao, int status
+	int matricula, char nome[80], char cpf[15], char fone[15], char senha[50], char municipio[20], int idMotorista,
+	char cnhMotorista[15], char validade[11], int nivelPermissao, int status
 );
 void cadastrarAdmin (
 	int matricula, char nome[80], char senha[50], int status
 );
 void alteraDadosMotorista (
-	int motoristaId, int matricula, char nome[80], char cpf[15], char fone[15], char email[50], char senha[50], char cep[50],
-	char logradouro[60], char numero[6], char bairro[15],char municipio[20], char uf[2], int idMotorista,
-	char cnhMotorista[15], char orgaoEmissorCNH[15], char validade[11], char tipoCNH[3], int nivelPermissao, int status
+	int motoristaId, int matricula, char nome[80], char cpf[15], char fone[15], char senha[50], char municipio[20], int idMotorista,
+	char cnhMotorista[15], char validade[11], int nivelPermissao, int status
 );
 bool login(int usuario, char senha[50]);
 void formMotorista();
@@ -102,14 +100,10 @@ int main() {
 	setlocale(LC_ALL, "Portuguese");
 	HWND hWnd = GetConsoleWindow();
 	ShowWindow(hWnd,SW_SHOWMAXIMIZED);
-	cadastrarMotorista (3012, "Carlos Luiz", "111.111.111-11", "(44)99999-9999", "carlosluiz@email.com", "ó?õá÷", "11111-111",
-	"Rua maringá", "12A", "Bairro universo", "Maringá", "PR", contMotorista, "1112333232", "SESP", "23/03/2023", "A-B", 1, 1);
-	cadastrarMotorista (3013, "Igor Silva", "222.222.222-11", "(44)98888-8888", "igorsilva@email.com", "ó÷?÷ýëÿ?Û", "22222-222",
-		"Rua maringá", "12A", "Bairro universo", "Maringá", "PR", contMotorista, "1112333232", "SESP", "23/03/2022", "A-B", 1, 1);
-	cadastrarMotorista (3014, "Marcio Silva", "111.111.111-11", "(44)99999-9999", "carlosluiz@email.com", "ó?õá÷", "11111-111",
-		"Rua maringá", "12A", "Bairro universo", "Maringá", "PR", contMotorista, "1112333232", "SESP", "23/03/2021", "A-B", 1, 1);
-	cadastrarMotorista (3015, "Jhonatan Santos", "888.888.888-11", "(44)99999-9999", "jhonatan21@email.com", "íé÷", "11111-111",
-		"Rua maringá", "12A", "Bairro universo", "Maringá", "PR", contMotorista, "1112333232", "SESP", "23/03/2021", "A-B", 1, 1);
+	cadastrarMotorista (3012, "Carlos Luiz", "111.111.111-11", "(44)99999-9999", "ó?õá÷", "Maringá", contMotorista, "1112333232", "23/03/2023", 1, 1);
+	cadastrarMotorista (3013, "Igor Silva", "222.222.222-11", "(44)98888-8888", "ó÷?÷ýëÿ?Û", "Maringá", contMotorista, "1112333232", "23/03/2022", 1, 1);
+	cadastrarMotorista (3014, "Marcio Silva", "111.111.111-11", "(44)99999-9999", "ó?õá÷", "Maringá", contMotorista, "1112333232", "23/03/2021", 1, 1);
+	cadastrarMotorista (3015, "Jhonatan Santos", "888.888.888-11", "(44)99999-9999", "íé÷", "Maringá", contMotorista, "1112333232", "23/03/2021", 1, 1);
 	cadastrarAdmin (3016, "admin", "Ûáóëõ", 1);
 	cadastrarAdmin (3017, "user", "ÝýÛÿëñ", 1);
 	bool usuarioAutenticado;
@@ -201,7 +195,9 @@ void menu() {
 	quebraLinha(1);
 	formataFrase(0, 15, "5 - Desativar motorista", 30, 2, 1);
 	quebraLinha(1);
-	formataFrase(0, 15, "6 - Sair", 30, 2, 1);
+	formataFrase(0, 15, "6 - Cadastrar admin", 30, 2, 1);
+	quebraLinha(1);
+	formataFrase(0, 15, "7 - Sair", 30, 2, 1);
 	quebraLinha(2);
 
 	formataCor(0, 15);
@@ -214,7 +210,7 @@ void menu() {
 			case 1:
 				system("cls");
 				formMotorista();
-				cadastrarMotorista(matricula, nome, cpf, fone, email, senha, cep, logradouro, numero, bairro, municipio, uf, contMotorista, cnh, orgaoEmissorCnh, validadeCnh, tipoCnh, 1, 1);
+				cadastrarMotorista(matricula, nome, cpf, fone, senha, municipio, contMotorista, cnh, validadeCnh, 1, 1);
 				quebraLinha(2);
 				system("pause");
 				system("cls");
@@ -255,6 +251,18 @@ void menu() {
 				menu();
 				break;
 			case 6:
+				system("cls");
+				formUsuario();
+				cadastrarAdmin(matricula, nome, senha, 1);
+				quebraLinha(1);
+				formataFrase(0, 10, "Admin cadastrado!", 20, 2, 1);
+				quebraLinha(2);
+				formataCor(0, 15);
+				system("pause");
+				system("cls");
+				menu();
+				break;
+			case 7:
 				system("cls");
 				quebraLinha(1);
 				formataFrase(0, 12, "Saindo", 30, 2, 1);
@@ -332,27 +340,18 @@ void quebraLinha(int quantidadeQuebras) {
 }
 
 void cadastrarMotorista (
-	int matricula, char nome[80], char cpf[15], char fone[15], char email[50], char senha[50], char cep[50],
-	char logradouro[60], char numero[6], char bairro[15],char municipio[20], char uf[2], int idMotorista,
-	char cnhMotorista[15], char orgaoEmissorCNH[15], char validade[11], char tipoCNH[3], int nivelPermissao, int status
+	int matricula, char nome[80], char cpf[15], char fone[15], char senha[50], char municipio[20], int idMotorista,
+	char cnhMotorista[15], char validade[11], int nivelPermissao, int status
 ) {
 	Motorista[contMotorista].Pessoa.matricula = matricula;
 	strcpy(Motorista[contMotorista].Pessoa.nome, nome);
 	strcpy(Motorista[contMotorista].Pessoa.cpf, cpf);	
-	strcpy(Motorista[contMotorista].Pessoa.fone, fone);	
-	strcpy(Motorista[contMotorista].Pessoa.email, email);	
+	strcpy(Motorista[contMotorista].Pessoa.fone, fone);		
 	strcpy(Motorista[contMotorista].Pessoa.senha, senha);
-	strcpy(Motorista[contMotorista].Pessoa.Endereco.cep, cep);
-	strcpy(Motorista[contMotorista].Pessoa.Endereco.logradouro, logradouro);
-	strcpy(Motorista[contMotorista].Pessoa.Endereco.numero, numero);
-	strcpy(Motorista[contMotorista].Pessoa.Endereco.bairro, bairro);
 	strcpy(Motorista[contMotorista].Pessoa.Endereco.municipio, municipio);
-	strcpy(Motorista[contMotorista].Pessoa.Endereco.uf, uf);
 	Motorista[contMotorista].idMotorista = idMotorista;
 	strcpy(Motorista[contMotorista].cnhMotorista, cnhMotorista);
-	strcpy(Motorista[contMotorista].orgaoEmissorCNH, orgaoEmissorCNH);
 	strcpy(Motorista[contMotorista].validade, validade);
-	strcpy(Motorista[contMotorista].tipoCNH, tipoCNH);
 	Motorista[contMotorista].nivelPermissao = nivelPermissao;
 	Motorista[contMotorista].status = status;
 	
@@ -378,43 +377,19 @@ void formMotorista() {
 	printf("Digite o telefone do motorista: ");
 	scanf("%s", fone);
 	fflush(stdin);
-	printf("Digite o email do motorista: ");
-	scanf("%s", email);
-	fflush(stdin);
 	printf("Digite a senha do motorista: ");
 	scanf("%s", senha);
 	criptoSenha(senha);
 	strcpy(senha, senhaCriptografada);
 	fflush(stdin);
-	printf("Digite o cep do motorista: ");
-	scanf("%s", cep);
-	fflush(stdin);
-	printf("Digite o logradouro do motorista: ");
-	scanf("%s", logradouro);
-	fflush(stdin);
-	printf("Digite o número do motorista: ");
-	scanf("%s", numero);
-	fflush(stdin);
-	printf("Digite o bairro do motorista: ");
-	scanf("%s", bairro);
-	fflush(stdin);
 	printf("Digite o município do motorista: ");
 	scanf("%s", municipio);
-	fflush(stdin);
-	printf("Digite o UF do motorista: ");
-	scanf("%s", uf);
 	fflush(stdin);
 	printf("Digite a CNH do motorista: ");
 	scanf("%s", cnh);
 	fflush(stdin);
-	printf("Digite o orgão emissor da CNH: ");
-	scanf("%s", orgaoEmissorCnh);
-	fflush(stdin);
 	printf("Digite a validade da CNH: ");
 	scanf("%s", validadeCnh);
-	fflush(stdin);
-	printf("Digite o tipo da CNH: ");
-	scanf("%s", tipoCnh);
 	fflush(stdin);
 }
 
@@ -517,7 +492,7 @@ void editarMotorista() {
 		formataFraseSimples(15, 4, "Motorista encontrado");
 		quebraLinha(2);
 		formMotorista();
-		alteraDadosMotorista(motorista, matricula, nome, cpf, fone, email, senha, cep, logradouro, numero, bairro, municipio, uf, contMotorista, cnh, orgaoEmissorCnh, validadeCnh, tipoCnh, 1, 1);
+		alteraDadosMotorista(motorista, matricula, nome, cpf, fone, senha, municipio, contMotorista, cnh, validadeCnh, 1, 1);
 		quebraLinha(1);
 		formataFraseSimples(0, 10, "Motorista atualizado");
 		quebraLinha(1);
@@ -528,26 +503,17 @@ void editarMotorista() {
 }
 
 void alteraDadosMotorista (
-	int motoristaId, int matricula, char nome[80], char cpf[15], char fone[15], char email[50], char senha[50], char cep[50],
-	char logradouro[60], char numero[6], char bairro[15],char municipio[20], char uf[2], int idMotorista,
-	char cnhMotorista[15], char orgaoEmissorCNH[15], char validade[11], char tipoCNH[3], int nivelPermissao, int status
+	int motoristaId, int matricula, char nome[80], char cpf[15], char email[50], char senha[50], char municipio[20], int idMotorista,
+	char cnhMotorista[15], char validade[11], int nivelPermissao, int status
 ) {
 	Motorista[motoristaId].Pessoa.matricula = matricula;
 	strcpy(Motorista[motoristaId].Pessoa.nome, nome);
 	strcpy(Motorista[motoristaId].Pessoa.cpf, cpf);	
 	strcpy(Motorista[motoristaId].Pessoa.fone, fone);	
-	strcpy(Motorista[motoristaId].Pessoa.email, email);	
 	strcpy(Motorista[motoristaId].Pessoa.senha, senha);
-	strcpy(Motorista[motoristaId].Pessoa.Endereco.cep, cep);
-	strcpy(Motorista[motoristaId].Pessoa.Endereco.logradouro, logradouro);
-	strcpy(Motorista[motoristaId].Pessoa.Endereco.numero, numero);
-	strcpy(Motorista[motoristaId].Pessoa.Endereco.bairro, bairro);
 	strcpy(Motorista[motoristaId].Pessoa.Endereco.municipio, municipio);
-	strcpy(Motorista[motoristaId].Pessoa.Endereco.uf, uf);
 	strcpy(Motorista[motoristaId].cnhMotorista, cnhMotorista);
-	strcpy(Motorista[motoristaId].orgaoEmissorCNH, orgaoEmissorCNH);
 	strcpy(Motorista[motoristaId].validade, validade);
-	strcpy(Motorista[motoristaId].tipoCNH, tipoCNH);
 	Motorista[motoristaId].nivelPermissao = nivelPermissao;
 	Motorista[motoristaId].status = status;
 }
